@@ -17,9 +17,9 @@ int main( int argc, char *argv[] )
     double const Tc = 2./log(1 + sqrt(2.0)); 
     double const T = Tc * atof(argv[1]);
     double const k = 1.0 ;
-    long int T_eq = 1e1;
+    long int T_eq = 1e10;
     int correlation_interval = 1e6;
-    long int number_to_keep = 1e4;
+    long int number_to_keep = 1e3;
 //DECLARATIONS
     double allM = 0;
     int M = 0;
@@ -41,7 +41,7 @@ int main( int argc, char *argv[] )
     cout << "T = " << T << endl;
 
     ofstream out_magnet;
-    out_magnet.open("M.dat");
+    out_magnet.open("M_" + tag + ".dat");
     
     while (output_counter < number_to_keep) {
         step ++;
