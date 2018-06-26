@@ -13,11 +13,11 @@ int main( int argc, char *argv[] )
     system("mkdir output");
     cout.precision(4);
 //OPTIONS /////////
-    int const L = 64;
+    int const L = 16;
     double const Tc = 2./log(1 + sqrt(2.0)); 
     double const T = Tc * atof(argv[1]);
     double const k = 1.0 ;
-    long int T_eq = 1e10;
+    long int T_eq = 1e4;
     int correlation_interval = 1e6;
     long int number_to_keep = 1e3;
 //DECLARATIONS
@@ -42,6 +42,8 @@ int main( int argc, char *argv[] )
 
     ofstream out_magnet;
     out_magnet.open("M_" + tag + ".dat");
+    ofstream out_configs;
+    out_configs.open("ising_" + tag + ".csv");
     
     while (output_counter < number_to_keep) {
         step ++;
@@ -55,18 +57,21 @@ int main( int argc, char *argv[] )
         if (step > T_eq) {
             if (step%correlation_interval ==0 ) {
                 cout << "Saved " << output_counter << " configurations" << endl;
-
-                ofstream out_config;
-                out_config.open("output/config_" + tag + "_" + to_string(output_counter) + ".dat");
+                for (int i=0; i<L; i++) {
+                    for (int j=0; i<L; j++) {
+                        out_configs << "0," ;
+                    }
+                }
+                
                 M = 0;
                 for (int i=0; i<L; i++) {
                     for (int j=0; j<L; j++) {
-                        out_config << config[i][j] << " ";
+                        out_configs << config[i][j] << " ";
                         M += config[i][j];
                     }
                     out_config << endl; 
                 }
-                out_config.close();
+                out_configs << "\n";
                 allM += abs(M);
                 output_counter += 1;
                 out_magnet << float(allM) / float(output_counter) << endl;
@@ -88,4 +93,6 @@ int main( int argc, char *argv[] )
             }
         }
     } 
+
+    out_configs.close();
 }
