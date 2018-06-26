@@ -66,7 +66,7 @@ int main( int argc, char *argv[] )
                 M = 0;
                 for (int i=0; i<L; i++) {
                     for (int j=0; j<L; j++) {
-                        out_configs << config[i][j] << " ";
+                        out_configs << config[i][j] << ",";
                         M += config[i][j];
                     }
                     out_config << endl; 
